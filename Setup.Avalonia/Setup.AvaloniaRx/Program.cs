@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.Threading;
+using ReactiveUI;
 
 namespace Setup.AvaloniaRx
 {
@@ -14,6 +16,10 @@ namespace Setup.AvaloniaRx
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToDebug();
+                .LogToDebug()
+                .AfterPlatformServicesSetup(builder =>
+                {
+                    RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
+                });
     }
 }
